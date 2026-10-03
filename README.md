@@ -6,6 +6,7 @@ Glossário da Estrutura:
 - Produto: Deve ser armazenado em um dicionário, com as chaves ID(int), nome(str) e preco(float).
 - Cardápio: Deve ser do tipo list, contendo um dicionário de cada produto dentro da lista.
   Exemplo de cardápio:
+  
   cardapio = [
     {"id": 1, "nome": "Hambúrguer Clássico", "preco": 25.50},
     {"id": 2, "nome": "Batata Frita Média", "preco": 12.00},
