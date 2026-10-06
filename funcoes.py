@@ -2,7 +2,26 @@
 import fila
 import pilha
 
+#RF01
+def cadastrar_item(id: int, nome: str, preco: float):
+    produto = {
+        "id": id,
+        "nome": nome,
+        "preco": preco
+    }
 
+    return produto
+
+#RF02
+def remover_item(cardapio, id: int):
+    for produto in cardapio:
+        if produto["id"] == id:
+            cardapio.remove(produto)
+            return True
+
+    return False
+  
+ #RF07
 def registrar_historico(pilha_historico, pedido, acao):
     registro = {
         "acao": acao,
@@ -10,6 +29,7 @@ def registrar_historico(pilha_historico, pedido, acao):
     }
     pilha_historico.push(registro)
     
+#RF08    
 def desfazer(pilha_historico, fila_cozinha):
     if pilha_historico.isEmpty():
         print("O histórico está vazio.")
