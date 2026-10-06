@@ -2,6 +2,13 @@
 import fila
 import pilha
 
+#Funções padrão de verificação
+def verificar_preco(preco):
+    try:
+        valor = float(str(preco).replace(',', '.'))
+        return valor > 0
+    except ValueError:
+        return False
 #RF01
 def cadastrar_item(id: int, nome: str, preco: float):
     produto = {
@@ -17,6 +24,7 @@ def remover_item(cardapio, id: int):
     for produto in cardapio:
         if produto["id"] == id:
             cardapio.remove(produto)
+            print(" Produto removido com sucesso!")
             return True
 
     return False
@@ -38,7 +46,7 @@ def desfazer(pilha_historico, fila_cozinha):
     ultima_acao = pilha_historico.pop()
     
     if ultima_acao["acao"] == "atender":
-        fila_aux = classe.Fila()
+        fila_aux = fila.Fila()  
         
         fila_aux.enqueue(ultima_acao["pedido"])
         
@@ -47,13 +55,18 @@ def desfazer(pilha_historico, fila_cozinha):
             
         while not fila_aux.isEmpty():
             fila_cozinha.enqueue(fila_aux.dequeue())
+            
+        print(f" Ação desfeita: Pedido #{ultima_acao['pedido']['id']} voltou para a fila da cozinha!")
         
     elif ultima_acao["acao"] == "lancar":
-        fila_aux = classe.Fila()
+        fila_aux = fila.Fila()  
+        
         while not fila_cozinha.isEmpty():
             pedido = fila_cozinha.dequeue()
             if pedido["id"] != ultima_acao["pedido"]["id"]:
                 fila_aux.enqueue(pedido)
+                
         while not fila_aux.isEmpty():
             fila_cozinha.enqueue(fila_aux.dequeue())
             
+        print(f" Ação desfeita: Lançamento do pedido #{ultima_acao['pedido']['id']} foi cancelado!")
