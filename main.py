@@ -64,9 +64,10 @@ def main():
                         print(" ID inválido! Digite apenas números.")
 
             case "3":
-                # RF-03: Listar Cardápio
-                pass
-
+                print()
+                funcoes.visualizar_cardapio(cardapio)
+                print()
+                
             case "4":
                 # RF-04: Lançar Novo Pedido
                 pass
@@ -76,8 +77,9 @@ def main():
                 pass
 
             case "6":
-                # RF-06: Visualizar Fila da Cozinha
-                pass
+                print()
+                funcoes.visualizar_fila(fila_cozinha)
+                print()
 
             case "7":
                 # Opção 7: Desfazer
