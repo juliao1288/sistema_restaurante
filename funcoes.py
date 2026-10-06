@@ -9,6 +9,7 @@ def verificar_preco(preco):
         return valor > 0
     except ValueError:
         return False
+        
 #RF01
 def cadastrar_item(id: int, nome: str, preco: float):
     produto = {
@@ -28,8 +29,47 @@ def remover_item(cardapio, id: int):
             return True
 
     return False
+
+#RF03
+def visualizar_cardapio(cardapio):
+    if not cardapio:
+        print(" O cardápio está vazio.")
+        return
+
+    print(" -- CARDÁPIO -- ")
+    for item in cardapio:
+        print(f"ID: {item['id']} -- Nome: {item['nome']} -- Preço: R${item['preco']:.2f}")
+
+#RF06
+def visualizar_fila(fila_cozinha):
+    if fila_cozinha.isEmpty():
+        print(" A fila da cozinha está vazia!")
+        return
+
+    fila_aux = fila.Fila()
+
+    print("=" * 45)
+    print("         FILA DE PEDIDOS DA COZINHA")
+    print("=" * 45)
+
   
- #RF07
+    posicao = 1
+    while not fila_cozinha.isEmpty():
+        pedido = fila_cozinha.dequeue()
+        
+       
+        print(f"Posição {posicao}º | Pedido #{pedido['id']} - Cliente: {pedido['cliente']}")
+        print(f"   Itens (IDs): {pedido['itens']}")
+        print("-" * 45)
+        
+        fila_aux.enqueue(pedido)
+        posicao += 1
+
+    
+    while not fila_aux.isEmpty():
+        fila_cozinha.enqueue(fila_aux.dequeue())
+  
+#RF07
 def registrar_historico(pilha_historico, pedido, acao):
     registro = {
         "acao": acao,
