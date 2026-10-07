@@ -25,6 +25,7 @@ def exibir_menu():
   
 def main():
     contagem = 0
+    contagem_pedidos = 0
     cardapio = []
     fila_cozinha = fila.Fila()
     pilha_historico = pilha.Pilha()
@@ -70,15 +71,26 @@ def main():
                 print()
                 
             case "4":
-                pedido = funcoes.cadastrar_pedido(cardapio)
-                fila_cozinha.enqueue(pedido) 
+                contagem_pedidos += 1
+                pedido = funcoes.cadastrar_pedido(cardapio, contagem_pedidos)
+                
+                if pedido:
+                    fila_cozinha.enqueue(pedido) 
+                    funcoes.registrar_historico(pilha_historico, pedido, "lancar")
+                else:
+                    
+                    contagem_pedidos -= 1
 
             case "5":
-                primeiro_fila = fila_cozinha.front()
-                confirmar_realizacao = funcoes.realizar_pedido(primeiro_fila)
-                if confirmar_realizacao == True:
-                    fila_cozinha.dequeue()
-   
+                if fila_cozinha.isEmpty():
+                    print(" Não há pedidos na fila da cozinha!")
+                else:
+                    primeiro_fila = fila_cozinha.front()
+                    confirmar_realizacao = funcoes.realizar_pedido(primeiro_fila)
+                    
+                    if confirmar_realizacao:
+                        fila_cozinha.dequeue()
+                        funcoes.registrar_historico(pilha_historico, primeiro_fila, "atender")
             case "6":
                 print()
                 funcoes.visualizar_fila(fila_cozinha)
