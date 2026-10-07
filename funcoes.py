@@ -41,15 +41,20 @@ def visualizar_cardapio(cardapio):
         print(f"ID: {item['id']} -- Nome: {item['nome']} -- Preço: R${item['preco']:.2f}")
 
 #RF04
-def CadastrarPedido(cardapio):
-    nome_cliente = str(input("qual o nome do cliente que deseja fazer o pedido?"))
+def cadastrar_pedido(cardapio):
+    nome_cliente = str(input(" Qual o nome do cliente que deseja fazer o pedido?"))
     lista_itens = []
     pedido = None
     while True:
         if not cardapio:
             print(" O cardápio está vazio.")
             return None
-        produto_selecionado = int(input("qual o id do produto a ser comprado?"))
+        while True:
+            try:
+                produto_selecionado = int(input(" Qual o id do produto a ser comprado? "))
+                break
+            except ValueError:
+                print(" Valor inválido, tente novamente!")
         exist = False
         for produto in cardapio:
             if produto["id"] == produto_selecionado:
@@ -60,16 +65,21 @@ def CadastrarPedido(cardapio):
                 }
                 exist = True
                 print("=" * 15)
-                print(f"O item de ID:{produto_selecionado}, foi adicionado ao pedido de {nome_cliente}")
+                print(f" O item de ID:{produto_selecionado}, foi adicionado ao pedido de {nome_cliente}")
                 print("=" * 15)
                                      
         if exist == False:
             print("Este id não corresponde a nenhum produto")
         print("=" * 45)
         print("--- OPÇÕES LANÇAMENTO PEDIDO ---")
-        print("1. Adicionar novo item ao pedido")
-        print("2. Encerrar pedido")
-        opcao = int(input("Escolha uma opção:"))
+        print(" 1. Adicionar novo item ao pedido")
+        print(" 2. Encerrar pedido")
+        while True:
+            try:
+                opcao = int(input(" Escolha uma opção:"))
+                break
+            except ValueError:
+                print(" Valor inválido, tente novamente!")
         print("=" * 45)
         match opcao:
             case 1:
@@ -77,11 +87,11 @@ def CadastrarPedido(cardapio):
             case 2:
                 if not pedido:
                     print("=" * 30)
-                    print("o pedido não foi computado pois está vazio")
+                    print(" O pedido não foi computado pois está vazio")
                     print("=" * 30)
                     return 
                 else:
-                    print("pedido será encaminhado a fila da cozinha")
+                    print(" Pedido será encaminhado a fila da cozinha")
                     return pedido
             case _:
                 print("=" * 30)
@@ -90,9 +100,9 @@ def CadastrarPedido(cardapio):
                 
      
 #RF05
-def Realizar_pedido(pedido):
+def realizar_pedido(pedido):
     if not pedido:
-        print("não há pedidos a serem atendidos")
+        print(" Não há pedidos a serem atendidos")
         return
     nome = pedido["nome"]
     itens = pedido["itens"]
@@ -104,8 +114,8 @@ def Realizar_pedido(pedido):
 
     print("----- PRIMEIRO PEDIDO DA FILA -----")
     print(descritivo)
-    print("1. Definir esse pedido como realizado")
-    print("2. Voltar ao menu princpal")
+    print(" 1. Definir esse pedido como realizado")
+    print(" 2. Voltar ao menu princpal")
     print("-" * 30)
     while True:
         opcao = int(input("Escolha uma opção:"))
@@ -113,7 +123,7 @@ def Realizar_pedido(pedido):
         match opcao:
             case 1:
    
-                print("PEDIDO REALIZADO")
+                print(" PEDIDO REALIZADO")
                 print("-" * 15)
                 return True
 
@@ -122,15 +132,6 @@ def Realizar_pedido(pedido):
             case _:
                 print(" Opção inválida! Tente novamente.")
 
-
-
-
-    
-        
-
-    
-       
-    
 
 #RF06
 def visualizar_fila(fila_cozinha):
