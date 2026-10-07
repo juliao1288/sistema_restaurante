@@ -3,10 +3,10 @@ class Fila:
     def __init__(self):
         self._pedidos = []
 
-    def lancar_pedido(self, pedido):
+    def enqueue(self, pedido):
         self._pedidos.append(pedido)
 
-    def atender_pedido(self):
+    def dequeue(self):
         if not self.isEmpty():
             return self._pedidos.pop(0)
         return None
@@ -17,7 +17,7 @@ class Fila:
     def isEmpty(self):
         return len(self._pedidos) == 0
     
-    def ver_proximo_pedido(self):
+    def front(self):
         if not self.isEmpty():
             return self._pedidos[0]
         return None
