@@ -9,15 +9,15 @@ def exibir_menu():
     print("=" * 50)
     print("           RESTAURANTE FASTBITE - CLI")
     print("=" * 50)
-    print("--- CARDÁPIO (list) ---")
+    print("--- CARDÁPIO ---")
     print("1. Cadastrar Item no Cardápio")
     print("2. Remover Item do Cardápio")
     print("3. Listar Cardápio\n")
-    print("--- COZINHA & PEDIDOS (Fila) ---")
+    print("--- COZINHA & PEDIDOS ---")
     print("4. Lançar Novo Pedido")
     print("5. Atender Próximo Pedido")
     print("6. Visualizar Fila da Cozinha\n")
-    print("--- SISTEMA (Pilha) ---")
+    print("--- SISTEMA ---")
     print("7. Desfazer Última Ação")
     print("8. Visualizar Histórico de Ações")
     print("0. Sair")
@@ -25,6 +25,7 @@ def exibir_menu():
   
 def main():
     contagem = 0
+    contagem_pedidos = 0
     cardapio = []
     fila_cozinha = fila.Fila()
     pilha_historico = pilha.Pilha()
@@ -50,6 +51,7 @@ def main():
                 produto = funcoes.cadastrar_item(id_prod, nome, preco_num)
                 cardapio.append(produto)
                 print(f" Item '{nome}' (ID: {id_prod}) cadastrado com sucesso!")
+                print(f" Item: {nome} -- ID: {id_prod} -- Cadastro realizado com sucesso!")
               
             case "2":
                 if not cardapio:
@@ -64,28 +66,45 @@ def main():
                         print(" ID inválido! Digite apenas números.")
 
             case "3":
-                # RF-03: Listar Cardápio
-                pass
-
+                print()
+                funcoes.visualizar_cardapio(cardapio)
+                print()
+                
             case "4":
-                # RF-04: Lançar Novo Pedido
-                pass
+                contagem_pedidos += 1
+                pedido = funcoes.cadastrar_pedido(cardapio, contagem_pedidos)
+                
+                if pedido:
+                    fila_cozinha.enqueue(pedido) 
+                    funcoes.registrar_historico(pilha_historico, pedido, "lancar")
+                else:
+                    
+                    contagem_pedidos -= 1
 
             case "5":
-                # RF-05: Atender Próximo Pedido
-                pass
-
+                if fila_cozinha.isEmpty():
+                    print(" Não há pedidos na fila da cozinha!")
+                else:
+                    primeiro_fila = fila_cozinha.front()
+                    confirmar_realizacao = funcoes.realizar_pedido(primeiro_fila)
+                    
+                    if confirmar_realizacao:
+                        fila_cozinha.dequeue()
+                        funcoes.registrar_historico(pilha_historico, primeiro_fila, "atender")
             case "6":
-                # RF-06: Visualizar Fila da Cozinha
-                pass
+                print()
+                funcoes.visualizar_fila(fila_cozinha)
+                print()
 
             case "7":
-                # Opção 7: Desfazer
+                print()
                 funcoes.desfazer(pilha_historico, fila_cozinha)
+                print()
 
             case "8":
-                # Opção 8: Visualizar Histórico
-                pass
+                print()
+                funcoes.visualizar_historico(pilha_historico)
+                print()
 
             case "0":
                 print("Encerrando o restaurante. Até logo!")
