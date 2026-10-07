@@ -9,15 +9,15 @@ def exibir_menu():
     print("=" * 50)
     print("           RESTAURANTE FASTBITE - CLI")
     print("=" * 50)
-    print("--- CARDÁPIO (list) ---")
+    print("--- CARDÁPIO ---")
     print("1. Cadastrar Item no Cardápio")
     print("2. Remover Item do Cardápio")
     print("3. Listar Cardápio\n")
-    print("--- COZINHA & PEDIDOS (Fila) ---")
+    print("--- COZINHA & PEDIDOS ---")
     print("4. Lançar Novo Pedido")
     print("5. Atender Próximo Pedido")
     print("6. Visualizar Fila da Cozinha\n")
-    print("--- SISTEMA (Pilha) ---")
+    print("--- SISTEMA ---")
     print("7. Desfazer Última Ação")
     print("8. Visualizar Histórico de Ações")
     print("0. Sair")
@@ -49,7 +49,7 @@ def main():
           
                 produto = funcoes.cadastrar_item(id_prod, nome, preco_num)
                 cardapio.append(produto)
-                print(f" Item '{nome}' (ID: {id_prod}) cadastrado com sucesso!")
+                print(f" Item: {nome} -- ID: {id_prod} -- Cadastro realizado com sucesso!")
               
             case "2":
                 if not cardapio:
