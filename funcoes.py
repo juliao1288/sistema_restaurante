@@ -76,6 +76,32 @@ def registrar_historico(pilha_historico, pedido, acao):
         "pedido": pedido
     }
     pilha_historico.push(registro)
+
+def visualizar_historico(pilha_historico):
+    if pilha_historico.isEmpty():
+        print(" O histórico de ações está vazio!")
+        return
+
+    pilha_aux = pilha.Pilha()
+
+    print("=" * 45)
+    print("      HISTÓRICO DE AÇÕES (Mais recente primeiro)")
+    print("=" * 45)
+
+   
+    while not pilha_historico.isEmpty():
+        registro = pilha_historico.pop()
+        pedido = registro["pedido"]
+        acao = registro["acao"].upper()
+
+        print(f" Ação: [{acao}] | Pedido #{pedido['id']} - Cliente: {pedido['cliente']}")
+        print("-" * 45)
+
+        pilha_aux.push(registro)
+
+   
+    while not pilha_aux.isEmpty():
+        pilha_historico.push(pilha_aux.pop())
     
 #RF08    
 def desfazer(pilha_historico, fila_cozinha):
