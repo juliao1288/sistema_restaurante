@@ -40,6 +40,98 @@ def visualizar_cardapio(cardapio):
     for item in cardapio:
         print(f"ID: {item['id']} -- Nome: {item['nome']} -- Preço: R${item['preco']:.2f}")
 
+#RF04
+def CadastrarPedido(cardapio):
+    nome_cliente = str(input("qual o nome do cliente que deseja fazer o pedido?"))
+    lista_itens = []
+    pedido = None
+    while True:
+        if not cardapio:
+            print(" O cardápio está vazio.")
+            return None
+        produto_selecionado = int(input("qual o id do produto a ser comprado?"))
+        exist = False
+        for produto in cardapio:
+            if produto["id"] == produto_selecionado:
+                lista_itens.append(produto_selecionado)
+                pedido = {
+                    "nome" : nome_cliente,
+                    "itens" : [lista_itens]
+                }
+                exist = True
+                print("=" * 15)
+                print(f"O item de ID:{produto_selecionado}, foi adicionado ao pedido de {nome_cliente}")
+                print("=" * 15)
+                                     
+        if exist == False:
+            print("Este id não corresponde a nenhum produto")
+        print("=" * 45)
+        print("--- OPÇÕES LANÇAMENTO PEDIDO ---")
+        print("1. Adicionar novo item ao pedido")
+        print("2. Encerrar pedido")
+        opcao = int(input("Escolha uma opção:"))
+        print("=" * 45)
+        match opcao:
+            case 1:
+                pass 
+            case 2:
+                if not pedido:
+                    print("=" * 30)
+                    print("o pedido não foi computado pois está vazio")
+                    print("=" * 30)
+                    return 
+                else:
+                    print("pedido será encaminhado a fila da cozinha")
+                    return pedido
+            case _:
+                print("=" * 30)
+                print(" Opção inválida! Tente novamente.")
+                print("=" * 30)
+                
+     
+#RF05
+def Realizar_pedido(pedido):
+    if not pedido:
+        print("não há pedidos a serem atendidos")
+        return
+    nome = pedido["nome"]
+    itens = pedido["itens"]
+    descritivo = f"""
+        NOME DO CLIENTE : {nome}
+        IDs DOS ITENS : {itens}
+
+        """
+
+    print("----- PRIMEIRO PEDIDO DA FILA -----")
+    print(descritivo)
+    print("1. Definir esse pedido como realizado")
+    print("2. Voltar ao menu princpal")
+    print("-" * 30)
+    while True:
+        opcao = int(input("Escolha uma opção:"))
+        print("-" * 30)
+        match opcao:
+            case 1:
+   
+                print("PEDIDO REALIZADO")
+                print("-" * 15)
+                return True
+
+            case 2:
+                return
+            case _:
+                print(" Opção inválida! Tente novamente.")
+
+
+
+
+    
+        
+
+    
+       
+    
+
 #RF06
 def visualizar_fila(fila_cozinha):
     if fila_cozinha.isEmpty():

@@ -49,6 +49,7 @@ def main():
           
                 produto = funcoes.cadastrar_item(id_prod, nome, preco_num)
                 cardapio.append(produto)
+                print(f" Item '{nome}' (ID: {id_prod}) cadastrado com sucesso!")
                 print(f" Item: {nome} -- ID: {id_prod} -- Cadastro realizado com sucesso!")
               
             case "2":
@@ -69,13 +70,15 @@ def main():
                 print()
                 
             case "4":
-                # RF-04: Lançar Novo Pedido
-                pass
+                pedido = funcoes.CadastrarPedido(cardapio)
+                fila_cozinha.lancar_pedido(pedido) 
 
             case "5":
-                # RF-05: Atender Próximo Pedido
-                pass
-
+                primeiro_fila = fila_cozinha.ver_proximo_pedido()
+                confirmar_realizacao = funcoes.Realizar_pedido(primeiro_fila)
+                if confirmar_realizacao == True:
+                    fila_cozinha.atender_pedido()
+   
             case "6":
                 print()
                 funcoes.visualizar_fila(fila_cozinha)

@@ -3,7 +3,7 @@ class Fila:
     def __init__(self):
         self._pedidos = []
 
-    def lançar_pedido(self, pedido):
+    def lancar_pedido(self, pedido):
         self._pedidos.append(pedido)
 
     def atender_pedido(self):
