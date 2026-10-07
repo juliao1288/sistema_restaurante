@@ -70,14 +70,14 @@ def main():
                 print()
                 
             case "4":
-                pedido = funcoes.CadastrarPedido(cardapio)
-                fila_cozinha.lancar_pedido(pedido) 
+                pedido = funcoes.cadastrar_pedido(cardapio)
+                fila_cozinha.enqueue(pedido) 
 
             case "5":
-                primeiro_fila = fila_cozinha.ver_proximo_pedido()
-                confirmar_realizacao = funcoes.Realizar_pedido(primeiro_fila)
+                primeiro_fila = fila_cozinha.front()
+                confirmar_realizacao = funcoes.realizar_pedido(primeiro_fila)
                 if confirmar_realizacao == True:
-                    fila_cozinha.atender_pedido()
+                    fila_cozinha.dequeue()
    
             case "6":
                 print()
