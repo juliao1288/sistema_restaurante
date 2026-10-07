@@ -82,12 +82,14 @@ def main():
                 print()
 
             case "7":
-                # Opção 7: Desfazer
+                print()
                 funcoes.desfazer(pilha_historico, fila_cozinha)
+                print()
 
             case "8":
-                # Opção 8: Visualizar Histórico
-                pass
+                print()
+                funcoes.visualizar_historico(pilha_historico)
+                print()
 
             case "0":
                 print("Encerrando o restaurante. Até logo!")
