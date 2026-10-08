@@ -1,8 +1,10 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 
 import funcoes
-from .componentes import criar_campo
+from .componentes import (
+    criar_campo, criar_botao_acao, criar_tabela, limpar_tabela, formatar_moeda,
+)
 
 
 def cadastrar_item(entrada_id, entrada_nome, entrada_preco, tabela_cardapio, cardapio):
@@ -39,9 +41,8 @@ def cadastrar_item(entrada_id, entrada_nome, entrada_preco, tabela_cardapio, car
 
     atualizar_cardapio(tabela_cardapio, cardapio)
 
-    entrada_id.delete(0, tk.END)
-    entrada_nome.delete(0, tk.END)
-    entrada_preco.delete(0, tk.END)
+    for entrada in (entrada_id, entrada_nome, entrada_preco):
+        entrada.delete(0, tk.END)
 
 
 def remover_item(tabela_cardapio, cardapio):
@@ -66,92 +67,61 @@ def remover_item(tabela_cardapio, cardapio):
 
 
 def atualizar_cardapio(tabela_cardapio, cardapio):
-    for item in tabela_cardapio.get_children():
-        tabela_cardapio.delete(item)
+    limpar_tabela(tabela_cardapio)
 
     for produto in cardapio:
         tabela_cardapio.insert(
-            "", "end", values=(produto["id"], produto["nome"], produto["preco"])
+            "", "end", values=(produto["id"], produto["nome"],
+                                 formatar_moeda(produto["preco"]))
         )
 
 def criar_formulario_cadastro(area_principal):
-    frame_cadastro = tk.Frame(area_principal, bg="white", padx=25, pady=20)
-    frame_cadastro.pack(fill="x", padx=35, pady=20)
+    frame_cadastro = tk.Frame(area_principal, bg="#F3F4F6", pady=12)
+    frame_cadastro.pack(fill="x", padx=24)
 
     titulo_cadastro = tk.Label(
         frame_cadastro,
         text="Cadastrar produto",
-        bg="white",
-        fg="#111827",
-        font=("Segoe UI Semibold", 15),
+        bg="#F3F4F6",
+        fg="#374151",
+        font=("Segoe UI", 11, "bold"),
     )
-    titulo_cadastro.pack(anchor="w", pady=(0, 20))
+    titulo_cadastro.pack(anchor="w", pady=(0, 8))
 
-    frame_campos = tk.Frame(frame_cadastro, bg="white")
+    frame_campos = tk.Frame(frame_cadastro, bg="#F3F4F6")
     frame_campos.pack(fill="x")
 
     entrada_id = criar_campo(frame_campos, "ID", 0, 1)
     entrada_nome = criar_campo(frame_campos, "Nome", 1, 3)
     entrada_preco = criar_campo(frame_campos, "Preço", 2, 1)
-
-    botao_cadastrar = tk.Button(
-        frame_cadastro,
-        text="Cadastrar item",
-        bg="#2563EB",
-        fg="white",
-        font=("Segoe UI", 11, "bold"),
-        relief="flat",
-        cursor="hand2",
-        padx=20,
-        pady=10,
-    )
-    botao_cadastrar.pack(anchor="e", pady=(20, 0))
+    botao_cadastrar = criar_botao_acao(frame_cadastro, texto='Cadastrar item', cor='#2563EB', cor_ativa='#1D4ED8')
+    botao_cadastrar.pack(anchor="e", pady=(8, 0))
 
     return botao_cadastrar, entrada_id, entrada_nome, entrada_preco
 
 
 def criar_tabela_cardapio(area_principal, cardapio):
-    frame_cardapio = tk.Frame(area_principal, bg="white", padx=25, pady=20)
-    frame_cardapio.pack(fill="both", expand=True, padx=35, pady=(0, 20))
+    frame_cardapio = tk.Frame(area_principal, bg="#F3F4F6")
+    frame_cardapio.pack(fill="both", expand=True, padx=24, pady=(0, 12))
 
-    frame_cabecalho = tk.Frame(frame_cardapio, bg="white")
-    frame_cabecalho.pack(fill="x", pady=(0, 20))
+    frame_cabecalho = tk.Frame(frame_cardapio, bg="#F3F4F6")
+    frame_cabecalho.pack(fill="x", pady=(0, 8))
 
     titulo_lista = tk.Label(
         frame_cabecalho,
         text="Itens do cardápio",
-        bg="white",
-        fg="#111827",
-        font=("Segoe UI Semibold", 15),
+        bg="#F3F4F6",
+        fg="#374151",
+        font=("Segoe UI", 11, "bold"),
     )
     titulo_lista.pack(side="left")
 
-    tabela_cardapio = ttk.Treeview(
-        frame_cardapio, columns=("id", "nome", "preco"), show="headings"
+    tabela_cardapio = criar_tabela(
+        frame_cardapio, ("id", "nome", "preco"), ("ID", "Produto", "Preço"),
+        (80, 300, 120), altura=5
     )
 
-    tabela_cardapio.heading("id", text="ID")
-    tabela_cardapio.heading("nome", text="Nome")
-    tabela_cardapio.heading("preco", text="Preço")
-
-    tabela_cardapio.column("id", width=80, anchor="center")
-    tabela_cardapio.column("nome", width=300)
-    tabela_cardapio.column("preco", width=120, anchor="center")
-
-    botao_remover = tk.Button(
-        frame_cabecalho,
-        text="Remover selecionado",
-        bg="#FEE2E2",
-        fg="#991B1B",
-        font=("Segoe UI", 10),
-        relief="flat",
-        cursor="hand2",
-        padx=15,
-        pady=8,
-        command=lambda: remover_item(tabela_cardapio, cardapio),
-    )
+    botao_remover = criar_botao_acao(frame_cabecalho, texto='Remover selecionado', cor='#DC2626', cor_ativa='#B91C1C', comando=lambda: remover_item(tabela_cardapio, cardapio))
     botao_remover.pack(side="right")
-
-    tabela_cardapio.pack(fill="both", expand=True)
 
     return tabela_cardapio
