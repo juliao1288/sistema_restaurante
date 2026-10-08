@@ -3,6 +3,7 @@
 import fila
 import pilha
 import funcoes
+from interface.app import iniciar_interface
 
 def exibir_menu():
     print()
@@ -27,8 +28,11 @@ def main():
     contagem = 0
     contagem_pedidos = 0
     cardapio = []
+
     fila_cozinha = fila.Fila()
     pilha_historico = pilha.Pilha()
+    iniciar_interface(cardapio, fila_cozinha, pilha_historico)
+    return
 
     while True:
         exibir_menu()
