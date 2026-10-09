@@ -9,7 +9,7 @@ from .integracao import executar_funcao
 
 
 def lancar_pedido(cardapio, cliente, itens, fila_cozinha, pilha_historico, id_pedido):
-    """Valida os dados da tela e usa a Fila e o histórico do projeto."""
+   
     cliente = cliente.strip()
     if not cliente:
         raise ValueError("Informe o nome do cliente.")
