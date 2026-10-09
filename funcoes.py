@@ -50,7 +50,7 @@ def cadastrar_pedido(cardapio, id_pedido):
     lista_itens = []
 
     while True:
-        # Pergunta qual produto deseja adicionar
+        
         while True:
             try:
                 produto_selecionado = int(input(" Qual o ID do produto a ser comprado? "))
@@ -58,7 +58,7 @@ def cadastrar_pedido(cardapio, id_pedido):
             except ValueError:
                 print(" Valor inválido! Digite apenas números.")
 
-        # Verifica se o ID existe no cardápio
+       
         exist = False
         for produto in cardapio:
             if produto["id"] == produto_selecionado:
