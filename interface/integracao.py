@@ -6,11 +6,7 @@ import funcoes
 
 
 def executar_funcao(funcao, *argumentos, respostas=()):
-    """Fornece respostas prontas e captura as mensagens da função original.
-
-    Usado somente em chamadas síncronas do Tkinter. A substituição temporária
-    de input/print fica no módulo funcoes e é restaurada ao terminar.
-    """
+ 
     entradas = iter(respostas)
     saida = io.StringIO()
 
